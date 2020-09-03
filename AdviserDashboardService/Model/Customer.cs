@@ -21,6 +21,7 @@
 
         public string PhoneNumber { get; set; }
 
+        [JsonProperty(PropertyName = "address")]
         public Address Address { get; set; }
 
         public int AccountNumber { get; set; }
@@ -28,7 +29,7 @@
         public string SortCode { get; set; }
 
         public int PolicyNumber { get; set; }
-        
+
         public string LastUpdatedBy { get; set; }
 
         public DateTime LastUpdateAt { get; set; }

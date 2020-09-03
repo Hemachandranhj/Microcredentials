@@ -9006,11 +9006,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Learning\\Microcredentials\\AdviserDashboardService\\AdviserDashboardService\\CustomerDashboardService.csproj",
+      "projectUniqueName": "C:\\Learning\\Microcredentials\\CustomerService\\AdviserDashboardService\\CustomerDashboardService.csproj",
       "projectName": "CustomerDashboardService",
-      "projectPath": "C:\\Learning\\Microcredentials\\AdviserDashboardService\\AdviserDashboardService\\CustomerDashboardService.csproj",
+      "projectPath": "C:\\Learning\\Microcredentials\\CustomerService\\AdviserDashboardService\\CustomerDashboardService.csproj",
       "packagesPath": "C:\\Users\\hemac\\.nuget\\packages\\",
-      "outputPath": "C:\\Learning\\Microcredentials\\AdviserDashboardService\\AdviserDashboardService\\obj\\",
+      "outputPath": "C:\\Learning\\Microcredentials\\CustomerService\\AdviserDashboardService\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hemac\\AppData\\Roaming\\NuGet\\NuGet.Config",

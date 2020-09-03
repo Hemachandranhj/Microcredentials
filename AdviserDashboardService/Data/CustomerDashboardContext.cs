@@ -23,7 +23,7 @@ namespace CustomerDashboardService.Data
 
             var database = response.Database;
 
-            this.container = await database.CreateContainerIfNotExistsAsync(containerName, "/id", 400);
+            this.container = await database.CreateContainerIfNotExistsAsync(containerName, "/address/postcode", 400);
         }
     }
 }

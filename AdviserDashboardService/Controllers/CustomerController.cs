@@ -3,6 +3,8 @@ using CustomerDashboardService.Model;
 using CustomerDashboardService.Data.Repositories;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CustomerDashboardService.Controllers
 {
@@ -17,16 +19,29 @@ namespace CustomerDashboardService.Controllers
             this.repository = repository;
         }
 
-        // GET: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8       
+        // GET: api/[controller]/eh11      
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> Get(string id)
+        public async Task<ActionResult<Customer>> Get(string id, string postcode)
         {
-            var entity = await repository.Get(id);
+            var entity = await repository.Get(id, postcode);
             if (entity == null)
             {
                 return NotFound();
             }
             return entity;
+        }
+
+        // GET: api/[controller]/eh11      
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<Customer>>> GetAll(string postcode, string dateOfBirth)
+        {
+            var entity = await repository.GetAll(postcode, dateOfBirth);
+
+            if (entity == null || !entity.Any())
+            {
+                return NotFound();
+            }
+            return entity.ToList();
         }
 
         // PUT: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8
@@ -46,19 +61,23 @@ namespace CustomerDashboardService.Controllers
         public async Task<ActionResult<Customer>> Post(Customer entity)
         {
             await repository.Add(entity);
-            return CreatedAtAction("Get", new { id = entity.Id }, entity);
+            return CreatedAtAction("Get", new { id = entity.Id, postcode = entity.Address.Postcode }, entity);
         }
 
         // DELETE: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8       
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> Delete(string id)
+        public async Task<ActionResult<Customer>> Delete(string id, Customer entity)
         {
-            var entity = await repository.Delete(id);
-            if (entity == null)
+            if (id != entity.Id)
+            {
+                return BadRequest();
+            }
+            var result = await repository.Delete(entity);
+            if (result == null)
             {
                 return NotFound();
             }
-            return entity;
+            return result;
         }
     }
 }

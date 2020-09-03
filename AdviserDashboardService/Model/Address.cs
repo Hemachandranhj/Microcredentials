@@ -1,4 +1,6 @@
-﻿namespace CustomerDashboardService.Model
+﻿using Newtonsoft.Json;
+
+namespace CustomerDashboardService.Model
 {
     public class Address
     {
@@ -6,6 +8,7 @@
 
         public string AddressLine2 { get; set; }
 
+        [JsonProperty(PropertyName = "postcode")]
         public string Postcode { get; set; }
 
         public string City { get; set; }
