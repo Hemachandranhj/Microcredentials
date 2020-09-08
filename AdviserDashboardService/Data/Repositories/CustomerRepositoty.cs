@@ -4,6 +4,8 @@ using Microsoft.Azure.Cosmos.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CustomerDashboardService.Data.Repositories
@@ -14,25 +16,33 @@ namespace CustomerDashboardService.Data.Repositories
 
         public CustomerRepository(ICustomerDashboardContext context)
         {
-            this.container = context.GetContainer();
+            this.container = context.CustomerContainer;
         }
 
         public async Task<Customer> Add(Customer entity)
         {
-            await this.container.CreateItemAsync<Customer>(entity, new PartitionKey(entity.Address.Postcode));
+            await this.container.CreateItemAsync<Customer>(entity, new PartitionKey(entity.Id));
             return entity;
         }
 
         public async Task<Customer> Delete(Customer entity)
         {
-            var ss = await container.DeleteItemAsync<Customer>(entity.Id, new PartitionKey(entity.Address.Postcode));
-            return ss;
+            var result = await container.DeleteItemAsync<Customer>(entity.Id, new PartitionKey(entity.Id));
+            return result;
         }
 
-        public async Task<Customer> Get(string id, string postcode)
+        public async Task<Customer> Get(string id)
         {
-            var result = await container.ReadItemAsync<Customer>(id.ToString(), new PartitionKey(postcode));
-            return result;
+            try
+            {
+                var result = await container.ReadItemAsync<Customer>(id.ToString(), new PartitionKey(id));
+
+                return result;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }                     
         }
 
         public async Task<IList<Customer>> GetAll(string postcode, string dateOfBirth)
@@ -41,7 +51,7 @@ namespace CustomerDashboardService.Data.Repositories
             var queryResultSetIterator = result.Where(x => x.Address.Postcode == postcode).ToFeedIterator();
             if (!string.IsNullOrEmpty(dateOfBirth))
             {
-                queryResultSetIterator = result.Where(x => x.Address.Postcode == postcode || x.DateOfBirth == Convert.ToDateTime(dateOfBirth)).ToFeedIterator();
+                queryResultSetIterator = result.Where(x => x.Address.Postcode == postcode && x.DateOfBirth == Convert.ToDateTime(dateOfBirth)).ToFeedIterator();
             }
             List<Customer> customers = new List<Customer>();
 
@@ -59,7 +69,7 @@ namespace CustomerDashboardService.Data.Repositories
 
         public async Task<Customer> Update(Customer entity)
         {
-            return await container.ReplaceItemAsync(entity, entity.Id.ToString(), new PartitionKey(entity.Address.Postcode));
+            return await container.ReplaceItemAsync(entity, entity.Id.ToString(), new PartitionKey(entity.Id));
         }
     }
 }

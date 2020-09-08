@@ -309,3 +309,4 @@ C:\Learning\Microcredentials\CustomerService\AdviserDashboardService\bin\Debug\n
 C:\Learning\Microcredentials\CustomerService\AdviserDashboardService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Learning\Microcredentials\CustomerService\AdviserDashboardService\obj\Debug\netcoreapp3.1\CustomerDashboardService.RazorTargetAssemblyInfo.cache
 C:\Learning\Microcredentials\CustomerService\AdviserDashboardService\obj\Debug\netcoreapp3.1\CustomerDashboardService.csproj.CopyComplete
+C:\Learning\Microcredentials\CustomerService\AdviserDashboardService\obj\Debug\netcoreapp3.1\CustomerDashboardService.csprojAssemblyReference.cache

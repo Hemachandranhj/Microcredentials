@@ -4,6 +4,7 @@ namespace CustomerDashboardService.Data
 {
     public interface ICustomerDashboardContext
     {
-        public Container GetContainer();
+        public Container CustomerContainer { get; }
+        public Container SearchContainer { get; }
     }
 }

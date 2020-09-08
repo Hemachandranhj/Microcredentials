@@ -35,7 +35,7 @@ namespace CustomerDashboardService
             #region Swagger Setup
             services.AddSwaggerGen(swagger =>
             {
-                swagger.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Adviser DashBoard", Version = "v1" });
+                swagger.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Customer DashBoard", Version = "v1" });
             });
             #endregion
         }
@@ -54,7 +54,7 @@ namespace CustomerDashboardService
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Adviser Dashboard V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer Dashboard V1");
             });
             #endregion
 

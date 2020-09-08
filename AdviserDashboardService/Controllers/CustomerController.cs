@@ -19,11 +19,11 @@ namespace CustomerDashboardService.Controllers
             this.repository = repository;
         }
 
-        // GET: api/[controller]/eh11      
+        // GET: api/[controller]/customer1      
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> Get(string id, string postcode)
+        public async Task<ActionResult<Customer>> Get(string id)
         {
-            var entity = await repository.Get(id, postcode);
+            var entity = await repository.Get(id);
             if (entity == null)
             {
                 return NotFound();
@@ -31,9 +31,9 @@ namespace CustomerDashboardService.Controllers
             return entity;
         }
 
-        // GET: api/[controller]/eh11      
-        [HttpGet()]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetAll(string postcode, string dateOfBirth)
+        // GET: api/[controller]/eh11he      
+        [HttpGet("{postcode}")]
+        public async Task<ActionResult<IEnumerable<Customer>>> Search(string postcode, string dateOfBirth)
         {
             var entity = await repository.GetAll(postcode, dateOfBirth);
 
@@ -64,20 +64,18 @@ namespace CustomerDashboardService.Controllers
             return CreatedAtAction("Get", new { id = entity.Id, postcode = entity.Address.Postcode }, entity);
         }
 
-        // DELETE: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8       
+        // DELETE: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Customer>> Delete(string id, Customer entity)
+        public async Task<IActionResult> Delete(string id, Customer entity)
         {
             if (id != entity.Id)
             {
                 return BadRequest();
             }
-            var result = await repository.Delete(entity);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return result;
+            entity.ttl = 1;
+            await repository.Update(entity);
+
+            return NoContent();
         }
     }
 }

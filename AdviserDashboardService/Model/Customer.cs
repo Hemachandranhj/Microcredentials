@@ -33,5 +33,9 @@
         public string LastUpdatedBy { get; set; }
 
         public DateTime LastUpdateAt { get; set; }
+
+        [JsonProperty(PropertyName = "ttl", NullValueHandling = NullValueHandling.Ignore)]
+        public int? ttl { get; set; }
+
     }
 }
