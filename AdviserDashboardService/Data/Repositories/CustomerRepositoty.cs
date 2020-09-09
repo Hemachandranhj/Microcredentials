@@ -14,9 +14,12 @@ namespace CustomerDashboardService.Data.Repositories
     {
         private readonly Container container;
 
+        private readonly Container searchContainer;
+
         public CustomerRepository(ICustomerDashboardContext context)
         {
             this.container = context.CustomerContainer;
+            this.searchContainer = context.SearchContainer;
         }
 
         public async Task<Customer> Add(Customer entity)
@@ -47,7 +50,7 @@ namespace CustomerDashboardService.Data.Repositories
 
         public async Task<IList<Customer>> GetAll(string postcode, string dateOfBirth)
         {
-            var result = container.GetItemLinqQueryable<Customer>();
+            var result = searchContainer.GetItemLinqQueryable<Customer>();
             var queryResultSetIterator = result.Where(x => x.Address.Postcode == postcode).ToFeedIterator();
             if (!string.IsNullOrEmpty(dateOfBirth))
             {

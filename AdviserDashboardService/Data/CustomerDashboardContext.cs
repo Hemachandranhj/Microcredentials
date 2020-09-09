@@ -29,7 +29,7 @@ namespace CustomerDashboardService.Data
             var database = response.Database;
 
             this.CustomerContainer = await database.CreateContainerIfNotExistsAsync(containerName, "/id", 400);
-            
+
             this.leaseContainer = await database.CreateContainerIfNotExistsAsync(containerName + "lease", "/id", 400);
 
             this.SearchContainer = await database.CreateContainerIfNotExistsAsync(containerName + "search", "/address/postcode", 400);
@@ -40,7 +40,7 @@ namespace CustomerDashboardService.Data
         private async void StartChangeFeed()
         {
             var processor = this.CustomerContainer.GetChangeFeedProcessorBuilder<Customer>(processorName: "changeFeedSample", OnChangesAsync)
-                            .WithLeaseContainer(this.leaseContainer)                            
+                            .WithLeaseContainer(this.leaseContainer)
                             .WithInstanceName("consoleHost")
                             .Build();
 
@@ -61,7 +61,7 @@ namespace CustomerDashboardService.Data
                 {
                     _ = await this.SearchContainer.CreateItemAsync<Customer>(customer, new PartitionKey(customer.Address.Postcode));
                 }
-            }                                           
+            }
         }
     }
 }

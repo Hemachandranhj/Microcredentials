@@ -19,7 +19,7 @@ namespace CustomerDashboardService.Controllers
             this.repository = repository;
         }
 
-        // GET: api/[controller]/customer1      
+        // GET: api/[controller]/customer1
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> Get(string id)
         {
@@ -32,7 +32,7 @@ namespace CustomerDashboardService.Controllers
         }
 
         // GET: api/[controller]/eh11he      
-        [HttpGet("{postcode}")]
+        [HttpGet()]
         public async Task<ActionResult<IEnumerable<Customer>>> Search(string postcode, string dateOfBirth)
         {
             var entity = await repository.GetAll(postcode, dateOfBirth);
@@ -61,7 +61,7 @@ namespace CustomerDashboardService.Controllers
         public async Task<ActionResult<Customer>> Post(Customer entity)
         {
             await repository.Add(entity);
-            return CreatedAtAction("Get", new { id = entity.Id, postcode = entity.Address.Postcode }, entity);
+            return CreatedAtAction("Get", new { id = entity.Id }, entity);
         }
 
         // DELETE: api/[controller]/A57592E3-D03B-4F73-A6F3-FB9BC3CC5CD8
